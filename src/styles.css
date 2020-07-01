@@ -1,0 +1,66 @@
+body {
+    background-color: #eee;
+    font-family: Arial;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.card {
+    box-shadow: 0 0 8px rgba(0,0,0,0.25);
+    border-radius: 3px;
+    background-color: white;
+}
+
+.card-title {
+    font-size: 9pt;
+    text-transform: uppercase;
+    text-align: center;
+    color: #999;
+    font-weight: bold;
+    padding-top: 8px;
+}
+
+.container {
+    max-width: 764px;
+    margin: auto;
+}
+
+.fade-in {
+    -webkit-animation: fadein 0.2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 0.2s; /* Firefox < 16 */
+        -ms-animation: fadein 0.2s; /* Internet Explorer */
+         -o-animation: fadein 0.2s; /* Opera < 12.1 */
+            animation: fadein 0.2s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+hr {
+    border: 1px #ddd solid;
+    border-bottom: 0;
+}

@@ -1,0 +1,11 @@
+<div class="container">
+    <h1>Materials</h1>
+    <div class="card-container">
+        <div class="card fade-in" *ngFor="let material of materials" (click)="edit()">
+            <div class="card-title">{{ material.name }}</div>
+            <div class="card-body">
+                <three-js-viewer [width]="120" [height]="120" [material]="material"></three-js-viewer>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+.card {
+    padding: 8px;
+    margin: 4px;
+    border: 3px white solid;
+    transition: 0.2s border;
+    width: 120px;
+    height: 146.5px;
+}
+
+.card:hover {
+    cursor: pointer;
+    border: 3px rgb(85, 167, 245) solid;
+}

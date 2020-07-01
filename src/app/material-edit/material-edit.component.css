@@ -1,0 +1,85 @@
+.panel {
+    display: flex;
+}
+
+.viewer-panel {
+    background-color: white;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 0 6px rgba(0,0,0,.25);
+}
+
+.editor-panel {
+    flex-grow: 1;
+    padding: 12px;
+    background-color: white;
+    border-radius: 3px;
+    margin-left: 8px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.25);
+    overflow-y: auto;
+    height: 600px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table input {
+    width: 100%;
+}
+
+table input[type="text"],
+table input[type="range"] {
+    width: calc(100% - 16px);
+}
+
+table, tr, td {
+    padding: 6px 8px;
+    border: 1px #ddd solid;
+}
+
+table tr td:first-child {
+    color: #999;
+    text-transform: uppercase;
+    font-size: 9pt;
+    font-weight: bold;
+}
+
+input {
+    background-color: #eee;
+    border: 0;
+    border-radius: 3px;
+    padding: 6px 8px;
+}
+
+input[type="color"] {
+    padding: 0;
+    background-color: unset;
+    width: 100%;
+}
+
+button {
+    border-radius: 3px;
+    border: 1px #aaa solid;
+    color: #111;
+    padding: 6px 8px;
+    background-color: white;
+}
+
+button:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.editor-panel-actions {
+    text-align: right;
+}
+
+select {
+    border-radius: 3px;
+    border: 1px #ddd solid;
+    color: #111;
+    padding: 6px 8px;
+    background-color: white;
+}

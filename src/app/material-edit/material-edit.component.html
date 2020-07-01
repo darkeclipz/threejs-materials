@@ -1,0 +1,156 @@
+<div class="container">
+    <h1>Material Editor</h1>
+    <div class="panel">
+        <div class="viewer-panel" #viewer>
+            <three-js-viewer *ngIf="viewer" [width]="300" [height]="300" [material]="material"></three-js-viewer>
+        </div>
+        <div class="editor-panel">
+            <div>
+                <select style="width: 100%; margin-bottom: 4px;">
+                    <option>Material: MeshBasicMaterial</option>
+                    <option>Material: MeshLambertMaterial</option>
+                    <option>Material: MeshPhongMaterial</option>
+                    <option>Material: MeshPhysicalMaterial</option>
+                </select>
+            </div>
+            <table style="max-width: 432px;">
+                <tr>
+                    <td>
+                        Name<br/>
+                        <small>The name of the material.</small>
+                    </td>
+                    <td><input type="text" [(ngModel)]="material.name" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        Color<br/>
+                        <small>The color of the material.</small>
+                    </td>
+                    <td>
+                        <input type="color" [(ngModel)]="material.color" (change)="update()" /> <br/>
+                        <pre>{{material.color}}</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Alpha test<br/>
+                        <small>
+                            Sets the alpha value to be used when running an alpha test. 
+                            The material will not be renderered if the opacity is lower than this value.
+                        </small>
+                    </td>
+                    <td>
+                        <input type="range" min="0" max="1" step="0.01" [(ngModel)]="material.alphaTest" (change)="update()"/>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>
+                        Alpha map<br/>
+                        <small>
+                            The alpha map is a grayscale texture that controls the opacity across the surface.
+                            (black: fully transparent; white: fully opaque)
+                        </small>
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr> -->
+                <tr>
+                    <td>
+                        Map<br/>
+                        <small>The color map.</small>
+                    </td>
+                    <td>
+                        <texture-uploader #alphaMap [texture]="material.map" (change)="update()"></texture-uploader>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Environment map<br/>
+                        <small>The environment map, made up of size images.</small>
+                    </td>
+                    <td>
+                        <select>
+                            <option>Cube reflection mapping</option>
+                            <option>Cube refraction mapping</option>
+                        </select>
+                        <hr/>
+                        <texture-uploader></texture-uploader>
+                        <texture-uploader></texture-uploader>
+                        <texture-uploader></texture-uploader>
+                        <texture-uploader></texture-uploader>
+                        <texture-uploader></texture-uploader>
+                        <texture-uploader></texture-uploader>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Combine<br/>
+                        <small>How to combine the result of the surface's color with the environment map.</small>
+                    </td>
+                    <td>
+                        <select>
+                            <option value="MultiplyOperation">Multiply</option>
+                            <option value="MixOperation">Mix</option>
+                            <option value="AddOperation">Add</option>
+                        </select> 
+                        <hr/>
+                        <small>If mix is chosen, reflectivity is used to blend between colors.</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Light map<br/>
+                        <small>The light map. Requires a second set of UV's.</small>
+                    </td>
+                    <td>
+                        <texture-uploader></texture-uploader>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Light map intensity<br/>
+                        <small>Intensity of the baked light.</small>
+                    </td>
+                    <td>
+                        <input type="range" min="0" max="1" step="0.01"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Reflectivity
+                    </td>
+                    <td>
+                        <input type="range" min="0" max="1" step="0.01"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Refraction ratio
+                    </td>
+                    <td>
+                        <input type="range" min="0" max="1" step="0.01"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Specular map
+                    </td>
+                    <td>
+                        <texture-uploader></texture-uploader>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Wireframe
+                    </td>
+                    <td>
+                        <input type="checkbox" [(ngModel)]="material.wireframe" (change)="update()" />
+                    </td>
+                </tr>
+            </table>
+            <button (click)="logMaterial()">Log material</button>
+            <button (click)="materialTypes()">Material types</button>
+        </div>
+    </div>
+</div>
