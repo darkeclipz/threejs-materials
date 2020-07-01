@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { ThreeJsViewerComponent } from './three-js-viewer/three-js-viewer.component';
 import { MaterialViewComponent } from './material-view/material-view.component';
 import { MaterialEditComponent } from './material-edit/material-edit.component';
-import { TextureUploaderComponent } from './texture-uploader/texture-uploader.component';
+import { TextureInputComponent } from './texture-input/texture-input.component';
+import { ColorInputComponent } from './color-input/color-input.component';
+import { RangeInputComponent } from './range-input/range-input.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { TextureUploaderComponent } from './texture-uploader/texture-uploader.co
     ThreeJsViewerComponent,
     MaterialViewComponent,
     MaterialEditComponent,
-    TextureUploaderComponent
+    TextureInputComponent,
+    ColorInputComponent,
+    RangeInputComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,22 @@
+.color-picker {
+    display: flex;
+    background-color: #eee;
+    border: 0;
+    border-radius: 3px;
+    padding: 6px 8px;
+}
+
+.color-picker input {
+    border: unset;
+    background-color: unset;
+    width: 100%;
+    text-align: center;
+}
+
+.color-picker input[type="color"] {
+    padding: 0;
+    background-color: unset;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
