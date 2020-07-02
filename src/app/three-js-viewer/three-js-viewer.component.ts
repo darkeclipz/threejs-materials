@@ -80,12 +80,10 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   }
 
   setFullScreen() {
-    let el = document.getElementById('canvas-window');
-    let bbox = el.getBoundingClientRect();
-    console.log('bbox', bbox);
+    let canvasWindow = document.getElementById('canvas-window');
+    let bbox = canvasWindow.getBoundingClientRect();
     this.width = bbox.width;
     this.height = bbox.height;
-    
   }
 
   onResize() {
@@ -100,7 +98,7 @@ export class ThreeJsViewerComponent implements AfterViewInit {
     this.camera.position.x = radius * Math.cos(this.angle);
     this.camera.position.z = radius * Math.sin(this.angle);
     this.camera.lookAt(new THREE.Vector3());
-    this.angle += 0.01;
+    this.angle += 0.001;
     this.renderer.render(this.scene, this.camera);
   }
 
