@@ -47,7 +47,7 @@ export class ThreeJsViewerComponent implements AfterViewInit {
     const aspect = this.width / this.height;
     this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ canvas: this.output.nativeElement, antialias: true });
-    const detail = 64;
+    const detail = 128;
     const geometry = new THREE.SphereGeometry(1, detail, detail);
     const material = this.material.toMaterial();
     const sphere = new THREE.Mesh(geometry, material);
@@ -70,7 +70,6 @@ export class ThreeJsViewerComponent implements AfterViewInit {
       });
       const skybox = new THREE.Mesh( new THREE.CubeGeometry( 200, 200, 200 ), skyboxMaterial );
       this.scene.add(skybox);
-      material.envMap = skybox;
     }
  
     if(this.animationHandle) {
@@ -82,13 +81,17 @@ export class ThreeJsViewerComponent implements AfterViewInit {
 
   setFullScreen() {
     let el = document.getElementById('canvas-window');
-    this.width = this.height = Math.min(el.clientWidth, el.clientHeight);
+    let bbox = el.getBoundingClientRect();
+    console.log('bbox', bbox);
+    this.width = bbox.width;
+    this.height = bbox.height;
+    
   }
 
   onResize() {
     console.log('Viewer Resize', this.width, this.height);
-    //this.setFullScreen();
-    //this.render();
+    this.setFullScreen();
+    this.render();
   }
 
   animate() {
@@ -108,8 +111,8 @@ export class ThreeJsViewerComponent implements AfterViewInit {
     const globalLight = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     this.scene.add(globalLight);
 
-    var light = new THREE.PointLight(0x404040, 2, 10, 2);
-    light.position.set(2, 2, 3);
-    this.scene.add(light);
+    // var light = new THREE.PointLight(0x404040, 2, 10, 2);
+    // light.position.set(2, 2, 3);
+    // this.scene.add(light);
   }
 }

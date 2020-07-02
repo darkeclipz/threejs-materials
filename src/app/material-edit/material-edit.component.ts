@@ -194,9 +194,10 @@ export class ThreePhongMaterial extends Material {
       m.bumpMap = this.loadTexture(this.bumpMap);
     }
 
-    // if(this.normalMap) {
-    //   m.normalMap = this.loadTexture(this.normalMap);
-    // }
+    if(this.normalMap) {
+      //m.normalMap = this.loadTexture(this.normalMap);
+      console.warn('normal map not implemented.');
+    }
 
     // urls of the images, one per half axis
     var urls = [
@@ -215,7 +216,7 @@ export class ThreePhongMaterial extends Material {
       case 0: cubemap.mapping = THREE.CubeReflectionMapping; break;
       case 1: cubemap.mapping = THREE.CubeRefractionMapping; break;
     }
-    console.log('envMap mapping', cubemap.mapping);
+    console.log('cubemap.mapping', cubemap.mapping);
     m.envMap = cubemap;
 
     m.needsUpdate = true;
