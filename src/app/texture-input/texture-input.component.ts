@@ -25,6 +25,20 @@ export class TextureInputComponent implements AfterViewInit {
       this.texture = reader.result;
       this.change.emit();
     }
-    reader.readAsDataURL(event.target.files[0]);
+    if(event.target.files && event.target.files.length > 0) {
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    else {
+      console.warn('Failed to load uploaded texture. Event files is empty.');
+    }
   }
+}
+
+export class TextureData {
+  texture: string;
+  wrapS: number;  
+  wrapT: number;
+  repeat: number;
+  flipY: boolean;
+  rotation: number;
 }

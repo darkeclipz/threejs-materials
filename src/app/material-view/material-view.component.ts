@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ThreePhongMaterial, Material, ThreeBasicMaterial } from '../material-edit/material-edit.component';
+import { Material } from '../../models/material';
+import { BasicMaterial } from '../../models/basicMaterial';
+import { PhongMaterial } from '../../models/phongMaterial';
 
 @Component({
   selector: 'app-material-view',
@@ -13,9 +15,7 @@ export class MaterialViewComponent implements OnInit {
 
   constructor(private router: Router) {
     for(let i = 0; i < 4*5; i++) {
-      let material = (Math.random() >= 0.5)
-       ? new ThreePhongMaterial()
-       : new ThreeBasicMaterial();
+      let material = new PhongMaterial();
       material.name = 'Material #' + i;
       this.materials.push(material);
     }

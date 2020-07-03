@@ -1,1 +1,8 @@
-<p>range-input works!</p>
+<div class="range-input">
+    <div class="text">
+        <input type="text" [(ngModel)]="value" (change)="onChange()"/>
+    </div>
+    <div class="range">
+        <input type="range" [min]="min" [max]="max" [step]="step" (change)="onChange()" [(ngModel)]="value"/>
+    </div>
+</div>

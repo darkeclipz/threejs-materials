@@ -8,11 +8,12 @@
 .viewer-panel {
     background-color: white;
     overflow: hidden;
-    flex-grow: 2;
+    flex-grow: 1;
+    min-width: 400px;
 }
 
 .editor-panel {
-    flex-grow: 1;
+    flex-grow: 2;
     min-width: 400px;
     max-width: 650px;
     background-color: white;

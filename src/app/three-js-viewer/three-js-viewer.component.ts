@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
-import { ThreeBasicMaterial } from '../material-edit/material-edit.component';
 declare const THREE: any;
 
 /*
@@ -18,87 +17,114 @@ declare const THREE: any;
 
 export class ThreeJsViewerComponent implements AfterViewInit {
 
-  constructor() { }
-
   @ViewChild('output', { static: true }) output: ElementRef;
   @Input('width') width: number = undefined;
   @Input('height') height: number = undefined;
   @Input('material') material: any;
-  @Input('skybox') skybox: boolean = false;
+  @Input('useSkybox') useSkybox: boolean = false;
 
   private camera: any;
   private renderer: any;
   private scene: any;
   private animationHandle: any;
   private angle: number = 0;
-  private sphereCamera: any;
+  private objectDistance: number = 2;
+  private threeMaterial: any;
 
   ngAfterViewInit() {
     setTimeout(async () => this.render(), 0);
   }
 
   render(): void {
-
     if(this.width == undefined || this.height == undefined) {
-      this.setFullScreen();
+      this.updateWindowSize();
     }
-
     this.scene = new THREE.Scene();
-    const aspect = this.width / this.height;
-    this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.output.nativeElement, antialias: true });
-    const detail = 64;
-    const geometry = new THREE.SphereGeometry(1, detail, detail);
-    const material = this.material.toMaterial();
-    const sphere = new THREE.Mesh(geometry, material);
-    this.scene.add(sphere);
-    this.camera.position.z = 2;
+    this.threeMaterial = this.material.toMaterial();
+    this.addRenderer();
+    this.addCamera();
+    this.addSphere();
     this.addLights();
-    this.renderer.setClearColor(new THREE.Color(0xffffff), 1);
-    this.renderer.setSize(this.width, this.height);
-    this.renderer.render(this.scene, this.camera);
-
-    if(this.skybox) {
-      var shader = THREE.ShaderLib[ "cube" ];
-      shader.uniforms[ "tCube" ].value = material.envMap;
-      var skyboxMaterial = new THREE.ShaderMaterial({
-        fragmentShader: shader.fragmentShader,
-        vertexShader: shader.vertexShader,
-        uniforms: shader.uniforms,
-        depthWrite: false,
-        side: THREE.BackSide
-      });
-      const skybox = new THREE.Mesh( new THREE.CubeGeometry( 200, 200, 200 ), skyboxMaterial );
-      this.scene.add(skybox);
-      material.envMap = skybox;
+    if(this.useSkybox) {
+      this.addSkybox();
     }
- 
+
     if(this.animationHandle) {
       cancelAnimationFrame(this.animationHandle);
     }
-
     this.animate();
   }
 
-  setFullScreen() {
-    let el = document.getElementById('canvas-window');
-    this.width = this.height = Math.min(el.clientWidth, el.clientHeight);
+  addSkybox() {
+    var shader = THREE.ShaderLib["cube"];
+    shader.uniforms["tCube"].value = this.threeMaterial.envMap;
+    var skyboxMaterial = new THREE.ShaderMaterial({
+      fragmentShader: shader.fragmentShader,
+      vertexShader: shader.vertexShader,
+      uniforms: shader.uniforms,
+      depthWrite: false,
+      side: THREE.BackSide
+    });
+    const skyboxGeometry = new THREE.CubeGeometry(200, 200, 200)
+    const skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+    this.scene.add(skybox);
+  }
+
+  addCamera() {
+    const aspect = this.width / this.height;
+    const fov = 75;
+    const nearClippingPlane = 0.1;
+    const farClippingPlane = 1000;
+    this.camera = new THREE.PerspectiveCamera(
+      fov, 
+      aspect, 
+      nearClippingPlane, 
+      farClippingPlane
+    );
+  }
+
+  addRenderer() {
+    this.renderer = new THREE.WebGLRenderer({ 
+      canvas: this.output.nativeElement, 
+      antialias: true 
+    });
+    this.renderer.setSize(this.width, this.height);
+    this.renderer.setClearColor(new THREE.Color(0xffffff), 1);   
+  }
+
+  addSphere() {
+    const radius = 1;
+    const detail = 128;
+    const geometry = new THREE.SphereGeometry(radius, detail, detail);
+    const sphere = new THREE.Mesh(geometry, this.threeMaterial);
+    this.camera.position.z = this.objectDistance;
+    this.scene.add(sphere);
+  }
+
+  updateWindowSize() {
+    let canvasWindow = document.getElementById('canvas-window');
+    let bbox = canvasWindow.getBoundingClientRect();
+    this.width = bbox.width;
+    this.height = bbox.height;
   }
 
   onResize() {
-    console.log('Viewer Resize', this.width, this.height);
-    //this.setFullScreen();
-    //this.render();
+    this.updateWindowSize();
+    this.render();
   }
 
   animate() {
     this.animationHandle = requestAnimationFrame(() => this.animate());
-    const radius = 2;
+    this.rotateCamera();
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  rotateCamera() {
+    const radius = this.objectDistance;
     this.camera.position.x = radius * Math.cos(this.angle);
     this.camera.position.z = radius * Math.sin(this.angle);
     this.camera.lookAt(new THREE.Vector3());
-    this.angle += 0.01;
-    this.renderer.render(this.scene, this.camera);
+    this.angle += 0.0025;
   }
 
   addLights() {
