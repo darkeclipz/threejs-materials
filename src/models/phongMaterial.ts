@@ -5,7 +5,7 @@ export class PhongMaterial extends Material {
 
     toMaterial(): any {
   
-      const m = new THREE.MeshPhongMaterial({ 
+      const material = new THREE.MeshPhongMaterial({ 
         name: this.name,
         color: this.color,
         ambient: this.ambient,
@@ -28,24 +28,24 @@ export class PhongMaterial extends Material {
       });
   
       if(this.map) {
-        m.map = this.loadTexture(this.map);
+        material.map = this.loadTexture(this.map);
       }
   
       if(this.envMap) {
-        m.envMap = this.loadTexture(this.envMap);
-        m.envMap.mapping = THREE.SphericalReflectionMapping;
+        material.envMap = this.loadTexture(this.envMap);
+        material.envMap.mapping = THREE.SphericalReflectionMapping;
       }
   
       if(this.lightMap) {
-        m.lightMap = this.loadTexture(this.lightMap);
+        material.lightMap = this.loadTexture(this.lightMap);
       }
   
       if(this.specularMap) {
-        m.specularMap = this.loadTexture(this.specularMap);
+        material.specularMap = this.loadTexture(this.specularMap);
       }
   
       if(this.bumpMap) {
-        m.bumpMap = this.loadTexture(this.bumpMap);
+        material.bumpMap = this.loadTexture(this.bumpMap);
       }
   
       // if(this.normalMap) {
@@ -70,12 +70,12 @@ export class PhongMaterial extends Material {
         case 1: cubemap.mapping = THREE.CubeRefractionMapping; break;
       }
       console.log('envMap mapping', cubemap.mapping);
-      m.envMap = cubemap;
-      m.envMap.mapping = THREE.CubeRefractionMapping;
+      material.envMap = cubemap;
+      material.envMap.mapping = THREE.CubeRefractionMapping;
   
-      m.needsUpdate = true;
+      material.needsUpdate = true;
      
-      return m;
+      return material;
     }
   }
   

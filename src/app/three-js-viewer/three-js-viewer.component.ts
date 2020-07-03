@@ -1,14 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
 declare const THREE: any;
 
-/*
-  RESOURCES:
-    Materials demo: https://threejsfundamentals.org/threejs/lessons/threejs-materials.html
-    Textures demo: https://threejsfundamentals.org/threejs/lessons/threejs-textures.html
-    Transparancy: https://threejs.org/examples/?q=trans#webgl_materials_physical_transparency
-    Subsurface scattering: 
-*/
-
 @Component({
   selector: 'three-js-viewer',
   templateUrl: './three-js-viewer.component.html',
@@ -30,15 +22,20 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   private angle: number = 0;
   private objectDistance: number = 2;
   private threeMaterial: any;
+  private rotationSpeed: number = 0.0025;
 
   ngAfterViewInit() {
-    setTimeout(async () => this.render(), 0);
+    setTimeout(async () => this.init(), 0);
   }
 
-  render(): void {
+  init(): void {
     if(this.width == undefined || this.height == undefined) {
       this.updateWindowSize();
     }
+    this.render();
+  }
+
+  render(): void {
     this.scene = new THREE.Scene();
     this.threeMaterial = this.material.toMaterial();
     this.addRenderer();
@@ -48,7 +45,6 @@ export class ThreeJsViewerComponent implements AfterViewInit {
     if(this.useSkybox) {
       this.addSkybox();
     }
-
     if(this.animationHandle) {
       cancelAnimationFrame(this.animationHandle);
     }
@@ -56,9 +52,9 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   }
 
   addSkybox() {
-    var shader = THREE.ShaderLib["cube"];
+    const shader = THREE.ShaderLib["cube"];
     shader.uniforms["tCube"].value = this.threeMaterial.envMap;
-    var skyboxMaterial = new THREE.ShaderMaterial({
+    const skyboxMaterial = new THREE.ShaderMaterial({
       fragmentShader: shader.fragmentShader,
       vertexShader: shader.vertexShader,
       uniforms: shader.uniforms,
@@ -102,8 +98,8 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   }
 
   updateWindowSize() {
-    let canvasWindow = document.getElementById('canvas-window');
-    let bbox = canvasWindow.getBoundingClientRect();
+    const canvasWindow = document.getElementById('canvas-window');
+    const bbox = canvasWindow.getBoundingClientRect();
     this.width = bbox.width;
     this.height = bbox.height;
   }
@@ -120,11 +116,11 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   }
 
   rotateCamera() {
+    this.angle += this.rotationSpeed;
     const radius = this.objectDistance;
     this.camera.position.x = radius * Math.cos(this.angle);
     this.camera.position.z = radius * Math.sin(this.angle);
     this.camera.lookAt(new THREE.Vector3());
-    this.angle += 0.0025;
   }
 
   addLights() {
@@ -134,7 +130,7 @@ export class ThreeJsViewerComponent implements AfterViewInit {
     const globalLight = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     this.scene.add(globalLight);
 
-    var light = new THREE.PointLight(0x404040, 2, 10, 2);
+    const light = new THREE.PointLight(0x404040, 2, 10, 2);
     light.position.set(2, 2, 3);
     this.scene.add(light);
   }
