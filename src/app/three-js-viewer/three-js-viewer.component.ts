@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
 declare const THREE: any;
 
 @Component({
@@ -18,6 +19,7 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   private camera: any;
   private renderer: any;
   private scene: any;
+  private sphere: any;
   private animationHandle: any;
   private angle: number = 0;
   private objectDistance: number = 2;
@@ -49,6 +51,12 @@ export class ThreeJsViewerComponent implements AfterViewInit {
       cancelAnimationFrame(this.animationHandle);
     }
     this.animate();
+  }
+
+  updateMaterial(material: any) {
+    this.threeMaterial = material;
+    this.sphere.material = this.threeMaterial;
+    this.threeMaterial.needsUpdate = true;
   }
 
   addSkybox() {
@@ -92,9 +100,9 @@ export class ThreeJsViewerComponent implements AfterViewInit {
     const radius = 1;
     const detail = 128;
     const geometry = new THREE.SphereGeometry(radius, detail, detail);
-    const sphere = new THREE.Mesh(geometry, this.threeMaterial);
+    this.sphere = new THREE.Mesh(geometry, this.threeMaterial);
     this.camera.position.z = this.objectDistance;
-    this.scene.add(sphere);
+    this.scene.add(this.sphere);
   }
 
   updateWindowSize() {

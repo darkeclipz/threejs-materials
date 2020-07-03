@@ -54,6 +54,7 @@ export class MaterialEditComponent implements AfterViewInit, OnDestroy {
     this.updateMaterialColors();
     this.updateMaterialSliders();
     this.updateMaterialTextures();
+    //this.threeJsViewer.updateMaterial(this.material.toMaterial());
     this.threeJsViewer.render();
   }
 
