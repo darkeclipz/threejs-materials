@@ -29,6 +29,7 @@ export class PhongMaterial extends Material {
   
       if(this.map) {
         material.map = this.loadTexture(this.map);
+        this.textureData.apply(material.map);
       }
   
       if(this.envMap) {
@@ -38,14 +39,17 @@ export class PhongMaterial extends Material {
   
       if(this.lightMap) {
         material.lightMap = this.loadTexture(this.lightMap);
+        this.textureData.apply(material.lightMap);
       }
   
       if(this.specularMap) {
         material.specularMap = this.loadTexture(this.specularMap);
+        this.textureData.apply(material.specularMap);
       }
   
       if(this.bumpMap) {
         material.bumpMap = this.loadTexture(this.bumpMap);
+        this.textureData.apply(material.bumpMap);
       }
   
       // if(this.normalMap) {

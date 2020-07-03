@@ -1,3 +1,5 @@
+import { TextureData } from 'src/app/texture-input/texture-input.component';
+
 declare var THREE: any;
 
 export class Material {
@@ -25,11 +27,8 @@ export class Material {
     refractionRatio: number = 0.98;
     combine: number = 0;
     envMapMapping: number = 0;
-  
-    constructor() {
-      this.name = "Material";
-    }
-  
+    textureData: TextureData = new TextureData();
+
     randomColor(): any {
       const color = new THREE.Color();
       color.r = Math.random();

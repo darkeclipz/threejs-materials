@@ -124,41 +124,48 @@
                 <td>
                     <table>
                         <tr>
-                            <td>Scale</td>
+                            <td>Wrap X</td>
                             <td>
-                                <div style="display: flex; flex-direction: row;">
-                                    <input type="text" style="width: 24px;" />
-                                    <div style="width: 8px;"></div>
-                                    <input type="text" style="width: 24px;" />
-                                </div>
+                                <select [(ngModel)]="material.textureData.wrap.x" (change)="update()">
+                                    <option value="0">Clamp</option>
+                                    <option value="1">Repeat</option>
+                                    <option value="2">Mirrored</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
-                            <td>Wrap</td>
+                            <td>Wrap Y</td>
                             <td>
-                                <div style="display: flex; flex-direction: row;">
-                                    <input type="text" style="width: 24px;" />
-                                    <div style="width: 8px;"></div>
-                                    <input type="text" style="width: 24px;" />
-                                </div>
+                                <select [(ngModel)]="material.textureData.wrap.y" (change)="update()">
+                                    <option value="0">Clamp</option>
+                                    <option value="1">Repeat</option>
+                                    <option value="2">Mirrored</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Repeat</td>
                             <td>
                                 <div style="display: flex; flex-direction: row;">
-                                    <input type="text" style="width: 24px;" />
+                                    <input type="text" style="width: 24px;" [(ngModel)]="material.textureData.repeat.x" (change)="update()" />
                                     <div style="width: 8px;"></div>
-                                    <input type="text" style="width: 24px;" />
+                                    <input type="text" style="width: 24px;" [(ngModel)]="material.textureData.repeat.y" (change)="update()" />
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>Rotation</td>
                             <td>
-                                <input type="text" />
+                                <input type="text" [(ngModel)]="material.textureData.rotation" (change)="update()" />
                             </td>
                         </tr>
+                        <tr>
+                            <td>Flip Y</td>
+                            <td>
+                                <input type="checkbox" [(ngModel)]="material.textureData.flipY" (change)="update()" />
+                            </td>
+                        </tr>
+
                     </table>
                 </td>
             </tr>
