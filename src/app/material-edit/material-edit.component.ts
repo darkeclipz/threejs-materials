@@ -17,7 +17,7 @@ export class MaterialEditComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('viewer') viewer: ElementRef;
   @ViewChild(ThreeJsViewerComponent) threeJsViewer: ThreeJsViewerComponent;
-  
+
   @ViewChild('color') color: ColorInputComponent;
   @ViewChild('ambient') ambient: ColorInputComponent;
   @ViewChild('emissive') emissive: ColorInputComponent;
