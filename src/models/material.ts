@@ -1,5 +1,5 @@
-import { TextureData } from 'src/app/texture-input/texture-input.component';
 
+import { TextureData } from '../models/textureData';
 declare var THREE: any;
 
 export class Material {
