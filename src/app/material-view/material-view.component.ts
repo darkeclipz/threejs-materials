@@ -28,5 +28,4 @@ export class MaterialViewComponent implements OnInit {
   edit() {
     this.router.navigate(['edit']);
   }
-
 }

@@ -5,3 +5,6 @@
     </div>
     <input #fileUpload type="file" accept="image/*"/>
 </label>
+<div *ngIf="texture" >
+    <button class="clear-button" (click)="clear()">clear</button>
+</div>

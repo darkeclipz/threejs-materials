@@ -32,4 +32,9 @@ export class TextureInputComponent implements AfterViewInit {
       console.warn('Failed to load uploaded texture. Event files is empty.');
     }
   }
+
+  clear(): void {
+    this.texture = undefined;
+    this.change.emit();
+  }
 }

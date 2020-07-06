@@ -28,6 +28,16 @@ input[type="file"] {
     background-color: white;
 }
 
+.clear-button {
+    padding: 0px 0px;
+    border: 1px #aaa solid;
+    border-radius: 3px;
+    font-size: 8pt;
+    color: #aaa;
+    text-align: center;
+    width: 64px;
+}
+
 .texture:hover .select-file-button {
     background-color: #eee;
 }

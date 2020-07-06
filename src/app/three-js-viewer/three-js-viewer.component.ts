@@ -39,7 +39,7 @@ export class ThreeJsViewerComponent implements AfterViewInit {
 
   render(): void {
     this.scene = new THREE.Scene();
-    this.threeMaterial = this.material.toMaterial();
+    this.threeMaterial = this.material.cast().toMaterial();
     this.addRenderer();
     this.addCamera();
     this.addSphere();
@@ -67,7 +67,8 @@ export class ThreeJsViewerComponent implements AfterViewInit {
       vertexShader: shader.vertexShader,
       uniforms: shader.uniforms,
       depthWrite: false,
-      side: THREE.BackSide
+      side: THREE.BackSide,
+      envMap: this.threeMaterial.envMap
     });
     const skyboxGeometry = new THREE.CubeGeometry(200, 200, 200)
     const skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
@@ -93,7 +94,8 @@ export class ThreeJsViewerComponent implements AfterViewInit {
       antialias: true 
     });
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setClearColor(new THREE.Color(0xffffff), 1);   
+    this.renderer.setClearColor(new THREE.Color(0xffffff), 1);  
+    this.renderer.outputEncoding = THREE.sRGBEncoding; 
   }
 
   addSphere() {
@@ -132,8 +134,8 @@ export class ThreeJsViewerComponent implements AfterViewInit {
   }
 
   addLights() {
-    const skyColor = 0xB1E1FF;  // light blue
-    const groundColor = 0xB97A20;  // brownish orange
+    const skyColor = 0xB1E1FF;      // light blue
+    const groundColor = 0xB97A20;   // brownish orange
     const intensity = 1;
     const globalLight = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     this.scene.add(globalLight);

@@ -1,5 +1,11 @@
 
 import { TextureData } from '../models/textureData';
+import { EnvironmentMapData } from '../models/environmentMapData';
+import { ThreeJsViewerComponent } from 'src/app/three-js-viewer/three-js-viewer.component';
+import { BasicMaterial } from './basicMaterial';
+import { LambertMaterial } from './lambertMaterial';
+import { PhongMaterial } from './phongMaterial';
+
 declare var THREE: any;
 
 export class Material {
@@ -10,15 +16,14 @@ export class Material {
     specular: string = '#111111';
     wireframe: boolean = false;
     map: any = undefined;
-    envMap: string = undefined;
     alphaTest: number = 0;
     side: number = 0;
     transparent: boolean = false;
     opacity: number = 1;
     fog: boolean = false;
-    lightMap: string = undefined;
+    //lightMap: string = undefined;
     specularMap: string = undefined;
-    normalMap: string = undefined;
+    //normalMap: string = undefined;
     bumpMap: string = undefined;
     bumpScale: number = 1;
     shininess: number = 30;
@@ -26,8 +31,10 @@ export class Material {
     reflectivity: number = 1;
     refractionRatio: number = 0.98;
     combine: number = 0;
+    envMap: EnvironmentMapData = new EnvironmentMapData();
     envMapMapping: number = 0;
     textureData: TextureData = new TextureData();
+    type: MaterialType;
 
     randomColor(): any {
       const color = new THREE.Color();
@@ -44,8 +51,33 @@ export class Material {
       img.src = textureBase64Encoded;
       return texture;
     }
-  
-    toMaterial() {
-      return null;
+
+    loadEnvironmentMap(envMap: EnvironmentMapData): any {
+      return undefined;
     }
-  }
+
+    loadDevelopmentCubeBox(): any { 
+      return undefined;
+    }
+
+    toMaterial() {
+      console.error('unable to transform to THREE.Material, '
+        + 'casting to appropriate type is required, use .cast()');
+    }
+  
+    cast(): any {
+      // we do not want to use a switch statement for this...
+      // can we use classes and casting instead?
+      switch(this.type) {
+        case MaterialType.Basic:   return this as BasicMaterial;
+        case MaterialType.Lambert: return this as LambertMaterial;
+        case MaterialType.Phong:   return this as PhongMaterial;
+      }
+    }
+}
+
+export declare enum MaterialType {
+  Basic = 0,
+  Lambert = 1,
+  Phong = 2
+}

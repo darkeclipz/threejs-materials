@@ -1,13 +1,5 @@
 <div class="panel">
     <div class="editor-panel">
-        <div>
-            <select class="material-type-select">
-                <option>Material: MeshBasicMaterial</option>
-                <option>Material: MeshLambertMaterial</option>
-                <option>Material: MeshPhongMaterial</option>
-                <option>Material: MeshPhysicalMaterial</option>
-            </select>
-        </div>
         <table class="table-title">
             <tr>
                 <td>
@@ -18,8 +10,25 @@
             </tr>
             <tr>
                 <td>
+                    Type<br/>
+                    <small>
+                        Used to determine how light is calculated.
+                        Basic uses no lights, and gives the fastest performance.
+                        Phong has more advanced calculations and gives slower performance.
+                    </small>
+                </td>
+                <td>
+                    <select>
+                        <option>Basic</option>
+                        <option>Lambert</option>
+                        <option selected>Phong</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     Color<br/>
-                    <small>The color of the material.</small>
+                    <small>The base color of the material.</small>
                 </td>
                 <td>
                     <color-input #color [value]="material.color" (change)="update()"></color-input>
@@ -28,7 +37,10 @@
             <tr>
                 <td>
                     Ambient<br/>
-                    <small>The ambient color of the material.</small>
+                    <small>
+                        The ambient color is the background color that is provided by the scene. 
+                        It is used to simulate light coming from all directions.
+                    </small>
                 </td>
                 <td>
                     <color-input #ambient [value]="material.ambient" (change)="update()"></color-input>
@@ -37,7 +49,10 @@
             <tr>
                 <td>
                     Emissive<br/>
-                    <small>The emissiveness of the material.</small>
+                    <small>
+                        The emissive color is the color that the material emits. 
+                        Lights are an example of emissive materials.
+                    </small>
                 </td>
                 <td>
                     <color-input #emissive [value]="material.emissive" (change)="update()"></color-input>
@@ -46,7 +61,7 @@
             <tr>
                 <td>
                     Specular<br/>
-                    <small>The specular color of the material.</small>
+                    <small>The specular color is the color of the reflection from lights.</small>
                 </td>
                 <td>
                     <color-input #specular [value]="material.specular" (change)="update()"></color-input>
@@ -54,73 +69,21 @@
             </tr>
             <tr>
                 <td>
-                    Side<br/>
-                    <small>Defines which side of faces will be rendererd - front, back or both.</small>
-                </td>
-                <td>
-                    <select [(ngModel)]="material.side" (change)="update()">
-                        <option value="0">Front</option>
-                        <option value="1">Back</option>
-                        <option value="2">Double</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Transparant<br/>
-                    <small>
-                        Whether the material is transparant. 
-                        Transparency is controlled by settings its opacity.
-                    </small>
-                </td>
-                <td>
-                    <input type="checkbox" [(ngModel)]="material.transparent" (change)="update()" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Opacity<br/>
-                    <small>
-                        Value between 0.0 and 1.0 indicating how transparent the material is.
-                    </small>
-                </td>
-                <td>
-                    <!-- <input type="range" min="0" max="1" step="0.01" [(ngModel)]="material.opacity" (change)="update()"/> -->
-                    <range-input #opacity [value]="material.opacity" (change)="update()"></range-input>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Fog<br/>
-                    <small>Whether the material is affected by fog.</small>
-                </td>
-                <td>
-                    <input type="checkbox" [(ngModel)]="material.fog" (change)="update()"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Alpha test<br/>
-                    <small>
-                        Sets the alpha value to be used when running an alpha test. 
-                        The material will not be renderered if the opacity is lower than this value.
-                    </small>
-                </td>
-                <td>
-                    <range-input #alphaTest [value]="material.alphaTest" (change)="update()"></range-input>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     Map<br/>
-                    <small>The color map.</small>
+                    <small>Used to color the material with a texture.</small>
                 </td>
                 <td>
                     <texture-input #map [texture]="material.map" (change)="update()"></texture-input>
                 </td>
             </tr>
             <tr>
-                <td>Texture parameters</td>
+                <td>
+                    Texture parameters<br/>
+                    <small>
+                        Used to change all the texture properties. 
+                        Textures can be scaled by using the repeat parameter.
+                    </small>
+                </td>
                 <td>
                     <table>
                         <tr>
@@ -147,58 +110,26 @@
                             <td>Repeat</td>
                             <td>
                                 <div style="display: flex; flex-direction: row;">
-                                    <input type="text" style="width: 24px;" [(ngModel)]="material.textureData.repeat.x" (change)="update()" />
+                                    <input type="text" style="width: 24px;" (change)="update()"
+                                        [(ngModel)]="material.textureData.repeat.x"  />
                                     <div style="width: 8px;"></div>
-                                    <input type="text" style="width: 24px;" [(ngModel)]="material.textureData.repeat.y" (change)="update()" />
+                                    <input type="text" style="width: 24px;" (change)="update()"
+                                        [(ngModel)]="material.textureData.repeat.y"  />
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Rotation</td>
-                            <td>
-                                <input type="text" [(ngModel)]="material.textureData.rotation" (change)="update()" />
                             </td>
                         </tr>
                         <tr>
                             <td>Flip Y</td>
                             <td>
-                                <input type="checkbox" [(ngModel)]="material.textureData.flipY" (change)="update()" />
+                                <input type="checkbox" [(ngModel)]="material.textureData.flipY" 
+                                    (change)="update()" />
                             </td>
                         </tr>
 
                     </table>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    Environment map<br/>
-                    <small>The environment map, made up of size images.</small>
-                </td>
-                <td>
-                    <select [(ngModel)]="material.envMapMapping" (change)="update()">
-                        <option value="0">Reflection</option>
-                        <option value="1">Refraction</option>
-                    </select>
-                    <hr/>
-                    <texture-input #envMap [texture]="material.envMap" (change)="update()"></texture-input>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Combine<br/>
-                    <small>How to combine the result of the surface's color with the environment map.</small>
-                </td>
-                <td>
-                    <select [(ngModel)]="material.combine" (change)="update()">
-                        <option value="0">Multiply</option>
-                        <option value="1">Mix</option>
-                        <option value="2">Add</option>
-                    </select> 
-                    <hr/>
-                    <small>If mix is chosen, reflectivity is used to blend between colors.</small>
-                </td>
-            </tr>
-            <tr>
+            <!-- <tr>
                 <td>
                     Light map<br/>
                     <small>The light map. Requires a second set of UV's.</small>
@@ -206,17 +137,26 @@
                 <td>
                     <texture-input #lightMap [texture]="material.lightMap" (change)="update()"></texture-input>
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td>
-                    Metal
+                    Metal <br/>
+                    <small>
+                        Check if the material is a metal. 
+                        It changes the specular reflection.
+                    </small>
                 </td>
                 <td>
                     <input type="checkbox" [(ngModel)]="material.metal" (change)="update()" />
                 </td>
             </tr>
             <tr>
-                <td>Shininess</td>
+                <td>
+                    Shininess<br/>
+                    <small>
+                        Changes the visual appearance of specular reflections.
+                    </small>
+                </td>
                 <td>
                     <range-input #shininess [value]="material.shininess" 
                         [min]="0" [max]="100" step="0.5" (change)="update()">
@@ -225,63 +165,239 @@
             </tr>
             <tr>
                 <td>
-                    Reflectivity
+                    Reflectivity<br/>
+                    <small>
+                        Determines how much light is reflected.
+                        Use a high value for a metallic material, and a low value
+                        for glossy materials.
+                    </small>
                 </td>
                 <td>
-                    <range-input #reflectivity [value]="material.reflectivity" (change)="update()"></range-input>
+                    <range-input #reflectivity [value]="material.reflectivity" 
+                        (change)="update()">
+                    </range-input>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>
-                    Refraction ratio
+                    Refraction ratio<br/>
+                    <small>
+                        Determines how light is refracted
+                        through a material. Used for glass materials.
+                    </small>
                 </td>
                 <td>
-                    <range-input #refractionRatio [value]="material.refractionRatio" (change)="update()"></range-input>
+                    <range-input #refractionRatio [value]="material.refractionRatio" 
+                        (change)="update()">
+                    </range-input>
+                </td>
+            </tr> -->
+            <tr>
+                <td>
+                    Specular map<br/>
+                    <small>
+                        Is used to change the reflectivity of the material for different
+                        points.
+                    </small>
+                </td>
+                <td>
+                    <texture-input #specularMap [texture]="material.specularMap" 
+                        (change)="update()">
+                    </texture-input>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    Specular map
-                </td>
-                <td>
-                    <texture-input #specularMap [texture]="material.specularMap" (change)="update()"></texture-input>
-                </td>
-            </tr>
-            <tr>
+            <!-- <tr>
                 <td>Normal map</td>
                 <td>
                     <texture-input #normalMap [texture]="material.normalMap" (change)="update()"></texture-input>
                 </td>
+            </tr> -->
+            <tr>
+                <td>
+                    Bump map<br/>
+                    <small>
+                        Is used to create the illusion of a 3D material. The map is used
+                        to give the material a 'bump' at points.
+                    </small>
+                </td>
+                <td>
+                    <texture-input #bumpMap [texture]="material.bumpMap" 
+                        (change)="update()">
+                    </texture-input>
+                </td>
             </tr>
             <tr>
                 <td>
-                    Bump map
+                    Bump scale<br/>
+                    <small>
+                        Determines how high the bump is.
+                        Value can be negative for an inward bump.
+                    </small>
                 </td>
-                <td>
-                    <texture-input #bumpMap [texture]="material.bumpMap" (change)="update()"></texture-input>
-                </td>
-            </tr>
-            <tr>
-                <td>Bump scale</td>
                 <td>
                     <range-input #bumpScale [value]="material.bumpScale" 
-                        [min]="-5" [max]="5" [step]="0.01" (change)="update()">
+                        [min]="-5" [max]="5" [step]="0.01" (change)="update()" >
                     </range-input>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Wireframe
+                    Environment map<br/>
+                    <small>
+                        Used to calculate the reflections on the
+                        material, and as the skybox in the scene. The environment map 
+                        consists of six textures, two for each axis.
+                    </small>
                 </td>
                 <td>
-                    <input type="checkbox" [(ngModel)]="material.wireframe" (change)="update()" />
+                    <!-- <select [(ngModel)]="material.envMapMapping" (change)="update()" disabled>
+                        <option value="0">Reflection</option>
+                        <option value="1">Refraction</option>
+                    </select>
+                    <hr /> -->
+                    <table>
+                        <tr>
+                            <td>Positive X</td>
+                            <td>
+                                <texture-input #envMapPx [texture]="material.envMap.px" 
+                                    (change)="update()">
+                                </texture-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Negative X</td>
+                            <td>
+                                <texture-input #envMapNx [texture]="material.envMap.nx" 
+                                    (change)="update()">
+                                </texture-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Positive Y</td>
+                            <td>
+                                <texture-input #envMapPy [texture]="material.envMap.py" 
+                                    (change)="update()">
+                                </texture-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Negative Y</td>
+                            <td>
+                                <texture-input #envMapNy [texture]="material.envMap.ny" 
+                                    (change)="update()">
+                                </texture-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Positive Z</td>
+                            <td>
+                                <texture-input #envMapPz [texture]="material.envMap.pz" 
+                                    (change)="update()">
+                                </texture-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Negative Z</td>
+                            <td>
+                                <texture-input #envMapNz [texture]="material.envMap.nz" 
+                                    (change)="update()">
+                                </texture-input>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Combine<br/>
+                    <small>
+                        How to combine the result of the surface color with the environment map.
+                        If mix is chosen, reflectivity is used to blend between colors.
+                    </small>
+                </td>
+                <td>
+                    <select [(ngModel)]="material.combine" (change)="update()">
+                        <option value="0">Multiply</option>
+                        <option value="1">Mix</option>
+                        <option value="2">Add</option>
+                    </select> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Side<br/>
+                    <small>Defines which side of faces will be rendererd - front, back or both.</small>
+                </td>
+                <td>
+                    <select [(ngModel)]="material.side" (change)="update()">
+                        <option value="0">Front</option>
+                        <option value="1">Back</option>
+                        <option value="2">Double</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Transparent<br/>
+                    <small>
+                        Whether the material is transparant. 
+                        Transparency is controlled by settings its opacity.
+                    </small>
+                </td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="material.transparent" (change)="update()" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Opacity<br/>
+                    <small>
+                        Value between 0.0 and 1.0 indicating how transparent the material is.
+                    </small>
+                </td>
+                <td>
+                    <range-input #opacity [value]="material.opacity" (change)="update()"></range-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Alpha test<br/>
+                    <small>
+                        Sets the alpha value to be used when running an alpha test. 
+                        The material will not be renderered if the opacity is lower than this value.
+                    </small>
+                </td>
+                <td>
+                    <range-input #alphaTest [value]="material.alphaTest" (change)="update()"></range-input>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fog<br/>
+                    <small>Whether the material is affected by fog.</small>
+                </td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="material.fog" (change)="update()"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Wireframe<br/>
+                    <small>
+                        Draw the wireframe of the material.
+                        Usefull for debugging purposes.
+                    </small>
+                </td>
+                <td>
+                    <input type="checkbox" [(ngModel)]="material.wireframe" 
+                        (change)="update()" />
                 </td>
             </tr>
         </table>
-        <a href="https://3dtextures.me/" target="_new">Download textures!</a>
     </div>
     <div class="viewer-panel" #viewer>
-        <three-js-viewer *ngIf="viewer" [material]="material" [useSkybox]="true"></three-js-viewer>
+        <three-js-viewer *ngIf="viewer" [material]="material" [useSkybox]="true">
+        </three-js-viewer>
     </div>
 </div>
 

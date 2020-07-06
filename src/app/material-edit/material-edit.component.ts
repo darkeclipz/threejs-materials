@@ -24,17 +24,22 @@ export class MaterialEditComponent implements AfterViewInit, OnDestroy {
   @ViewChild('specular') specular: ColorInputComponent;
 
   @ViewChild('map') map: TextureInputComponent;
-  @ViewChild('envMap') envMap: TextureInputComponent;
-  @ViewChild('lightMap') lightMap: TextureInputComponent;
+  @ViewChild('envMapPx') envMapPx: TextureInputComponent;
+  @ViewChild('envMapPx') envMapNx: TextureInputComponent;
+  @ViewChild('envMapPy') envMapPy: TextureInputComponent;
+  @ViewChild('envMapNy') envMapNy: TextureInputComponent;
+  @ViewChild('envMapPz') envMapPz: TextureInputComponent;
+  @ViewChild('envMapNz') envMapNz: TextureInputComponent;
+  // @ViewChild('lightMap') lightMap: TextureInputComponent;
   @ViewChild('specularMap') specularMap: TextureInputComponent;
   @ViewChild('bumpMap') bumpMap: TextureInputComponent;
-  @ViewChild('normalMap') normalMap: TextureInputComponent;
+  // @ViewChild('normalMap') normalMap: TextureInputComponent;
 
   @ViewChild('opacity') opacity: RangeInputComponent;
   @ViewChild('alphaTest') alphaTest: RangeInputComponent;
   @ViewChild('shininess') shininess: RangeInputComponent;
   @ViewChild('reflectivity') reflectivity: RangeInputComponent;
-  @ViewChild('refractionRatio') refractionRatio: RangeInputComponent;
+  //@ViewChild('refractionRatio') refractionRatio: RangeInputComponent;
   @ViewChild('bumpScale') bumpScale: RangeInputComponent;
 
   material: Material = new PhongMaterial();
@@ -54,7 +59,6 @@ export class MaterialEditComponent implements AfterViewInit, OnDestroy {
     this.updateMaterialColors();
     this.updateMaterialSliders();
     this.updateMaterialTextures();
-    //this.threeJsViewer.updateMaterial(this.material.toMaterial());
     this.threeJsViewer.render();
   }
 
@@ -67,11 +71,22 @@ export class MaterialEditComponent implements AfterViewInit, OnDestroy {
 
   private updateMaterialTextures() {
     this.material.map = this.map.texture;
-    this.material.envMap = this.envMap.texture;
-    this.material.lightMap = this.lightMap.texture;
+    // update env map
+    {
+      this.material.envMap.px = this.envMapPx.texture;
+      this.material.envMap.nx = this.envMapNx.texture;
+      this.material.envMap.py = this.envMapPy.texture;
+      this.material.envMap.ny = this.envMapNy.texture;
+      this.material.envMap.pz = this.envMapPz.texture;
+      this.material.envMap.nz = this.envMapNz.texture;
+    }
+    
     this.material.specularMap = this.specularMap.texture;
     this.material.bumpMap = this.bumpMap.texture;
-    this.material.normalMap = this.normalMap.texture;
+
+    // not implemented at this moment
+      // this.material.lightMap = this.lightMap.texture;
+      // this.material.normalMap = this.normalMap.texture;
   }
   
   private updateMaterialSliders() {
@@ -79,7 +94,7 @@ export class MaterialEditComponent implements AfterViewInit, OnDestroy {
     this.material.alphaTest = this.alphaTest.value;
     this.material.shininess = this.shininess.value;
     this.material.reflectivity = this.reflectivity.value;
-    this.material.refractionRatio = this.refractionRatio.value;
+    // this.material.refractionRatio = this.refractionRatio.value;
     this.material.bumpScale = this.bumpScale.value;
   }
 }
